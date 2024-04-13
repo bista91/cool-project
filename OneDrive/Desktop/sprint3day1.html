@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sprint 3 day1</title>
+</head>
+<body>
+   <script>
+//create an object
+//include property'name'
+//where they are from
+//add a method of greeting
+
+const softwareEngineer = {
+    name: 'sundari',
+    from: 'MA',
+    specialty:'Bachelor degree',
+    greet: function(){
+        return `Thank you for logging in, ${this.name}
+        see that your specialty is ${this.specialty}.`;
+    }
+}
+
+console.log(softwareEngineer.greet())
+
+
+//create an object baker
+const baker = {
+    name: 'Leon',
+    bakedGood: 'cookies',
+    pie:'banana cream pie',
+    customer: 'Michael',
+    bake:function(name, bakedGood, pie, customer){
+        return `${name}makes a mean batch of ${bakedGood} and 
+        ${customer} cannot wait to try some of the ${pie}`
+        
+    }
+}
+    console.log(baker.bake(baker.name,baker.bakedGood,baker.pie,baker.customer))
+
+
+    const car = {
+        make: 'maybach',
+        color:'red',
+        year:'2023',
+        engineSize:'v8',
+        lowSpeed:'0',
+        topSpeed:'60',
+        secs:'4.5',
+        mph:'mph',
+        specs(secs,lowSpeed,topSpeed,mph){
+            return `${secs} sec ${lowSpeed} - ${topSpeed} ${mph}`;
+        }
+    }
+    console.log(car.specs(car.secs,car.lowSpeed,car.topSpeed,car.mph))
+
+    const plane = {
+        make: 'boeing',
+        model:'747',
+        holds:'500',
+        odometer:'0',
+        destination:'bejing, vegas',
+        fly(miles){
+            this.odometer += miles;
+            return `${this.holds}passenger have flow ${miles}
+            towards ${this.destination},putting the plane's odometer a`
+        }
+    }
+
+    console.log(plane.fly(300))
+
+   </script> 
+</body>
+</html>

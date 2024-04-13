@@ -1,0 +1,101 @@
+#logout-link {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+#logout-link {
+	display: block;
+}
+
+#logout-link:hover {
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.navbar .nav-link {
+	width: 100% !important;
+}
+
+.card-header {
+	padding: .75rem;
+	float: left;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.card-header.collapse-header {
+	padding: 0px;
+}
+
+.card-header button[data-toggle="collapse"]{
+	padding: .75rem 1.25rem;
+	margin: 0;
+	border-radius: 0;
+}
+
+.card .card-header, .btn.btn-primary, .btn-link, .pagination .page-item.active .page-link {
+	background-color: #333366;
+	color: white;
+	border-color: #333366;
+}
+
+.card .card-header:hover, .btn.btn-primary:hover, .btn-link:hover {
+	background-color: #333366;
+	color: white;
+}
+
+.pagination .page-item:not(.active) {
+	cursor: pointer;
+}
+
+.pagination .active {
+	cursor: default;
+}
+
+a {
+	color: #333366;
+}
+
+.form-group div:nth-of-type(2n+1) {
+	font-weight: bold;
+}
+
+.container-fluid {
+	padding: 1.5px;
+}
+
+.form-group label {
+	font-weight: bold;
+}
+
+caption {
+	caption-side: top;
+}
+
+.datatables caption {
+	display: none;
+}
+
+[data-toggle="collapse"]:hover {
+	cursor: pointer;
+	background-color: rgba(0,0,0,.2);
+}
+
+.w-12 {
+	width: 12.5% !important;
+}
+
+.badge-primary {
+	background-color: white;
+	color: #333366;
+}
+
+@media only screen and (max-width: 991.98px) {
+	.card-body {
+		padding-left: .75rem;
+		padding-right: .75rem;
+	}
+	
+	.container {
+		max-width: unset;
+	}
+}

@@ -1,0 +1,161 @@
+"use strict";
+
+// https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
+if (!String.prototype.padStart) {
+	String.prototype.padStart = function padStart(targetLength, padString) {
+		targetLength = targetLength >> 0; // truncate if number, or convert
+		// non-number to 0;
+		padString = String(typeof padString !== 'undefined' ? padString : ' ');
+		if (this.length >= targetLength) {
+			return String(this);
+		} else {
+			targetLength = targetLength - this.length;
+			if (targetLength > padString.length) {
+
+				// append to original to ensure we are longer than needed
+				padString += padString.repeat(targetLength / padString.length);
+			}
+			return padString.slice(0, targetLength) + String(this);
+		}
+	};
+}
+
+function toast(options){
+	var parent = $(options.parent);
+	if(!parent.length){
+		parent = $(document.body);
+	}
+	
+	var container = $("<div/>", {
+		"aria-live" : "polite",
+		"aria-atomic" : "true",
+		"style" : "position: absolute; min-height: 200px; top: 0; right: 0; z-index: 1000"
+	});
+	
+	var toast = $("<div/>", {
+		"class" : " toast",
+		"data-autohide" : "false"
+	}).appendTo(container);
+	
+	var header = $("<div/>", {
+		"class" : "toast-header"
+	}).appendTo(toast);
+	
+	$("<strong/>", {
+		"class" : "mr-auto",
+		"text" : options.title || "Information"
+	}).appendTo(header);
+	
+	header.append('<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+	
+	$("<div/>", {
+		"class" : "toast-body",
+		"text" : options.body || ""
+	}).appendTo(toast);
+	
+	parent.append(container);
+	toast.toast("show");
+	return toast;
+}
+
+/**
+ * Take a date in the form of an Epoch milliseconds and formats it as
+ * 'MM/DD/YYYY'
+ * 
+ * @param date
+ *            Number of milliseconds since Epoch
+ * @returns The formatted date
+ * @see formatDateTime
+ */
+function formatDate(date /* number of milliseconds since Epoch */) {
+	if (!date) {
+		return "N/A";
+	}
+	var d = getDate(date);
+
+	var year = d.getFullYear();
+
+	var month = (d.getMonth() + 1).toString();
+	month = month.length === 2 ? month : "0" + month;
+
+	var day = d.getDate().toString();
+	day = day.length === 2 ? day : "0" + day;
+
+	return month + "/" + day + "/" + year;
+}
+
+/**
+ * Takes an date in the form of an Epoch milliseconds and formats its time as
+ * 'HH:mm:ss'
+ * 
+ * @param date
+ *            Number of milliseconds since Epoch
+ * @returns A date object
+ */
+function getDate(date) {
+	return new Date(date);
+}
+
+/**
+ * Format the specified date as 'MM/DD/YYYY H24:mm:ss'
+ * 
+ * @param date
+ *            Number of milliseconds since Epoch
+ * @returns The formatted date
+ * @see formatDate
+ */
+function formatDateTime(date) {
+	if (!date) {
+		return "N/A";
+	}
+
+	var d = getDate(date);
+
+	var hours = d.getHours().toString();
+	hours = hours.length === 2 ? hours : "0" + hours;
+
+	var minutes = d.getMinutes().toString();
+	minutes = minutes.length === 2 ? minutes : "0" + minutes;
+
+	var seconds = d.getSeconds().toString();
+	seconds = seconds.length === 2 ? seconds : "0" + seconds;
+
+	return formatDate(date) + " " + hours + ":" + minutes + ":" + seconds;
+}
+
+/**
+ * Mark the specified node as active in the header.
+ * 
+ * Also remove the href from the active node so that it doesn't load the same
+ * page when clicked.
+ * 
+ * @param selector
+ *            The node to mark as active.
+ */
+function setNavLinkActive(selector /* jQuery node */) {
+	$("#navbar").find(".nav-link.active").removeClass("active");
+	$(selector).addClass("active").removeAttr("href");
+}
+
+/**
+ * Load the help document names into the header.
+ */
+function loadDocuments() {
+	var menuNode = $("#help-dropdown-menu");
+	menuNode.empty();
+	$.ajax({
+		url : "/ePayroll/user/data/document/findAll",
+		cache : "false",
+		dataType : "json",
+		success : function(response) {
+			if (response.data.length === 0) {
+				menuNode.append('<a class="dropdown-item">No documents available</a>');
+			} else {
+				for (var i = 0; i < response.data.length; i++) {
+					menuNode.append('<a' + ' class="dropdown-item" href="/ePayroll/web/data/document/downloadDocument?documentId=' + response.data[i].documentId + '" target="_blank">' + response.data[i].name + '</a>');
+				}
+			}
+		}
+	});
+}
